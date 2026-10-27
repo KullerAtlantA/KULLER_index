@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>KULLER INDEX</title>
+<style>
+  :root{ --bg:#0d0d0e; --panel:#161617; --ink:#ecebe9; --ink-soft:#908d88; --accent:#d23b32; --line:#2b2b2d; }
+  html[data-theme="light"]{ --bg:#f2f1ed; --panel:#fffefb; --ink:#1c1b18; --ink-soft:#6a665d; --accent:#8a4b2a; --line:#ddd9cf; }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Inter Tight','Segoe UI',system-ui,sans-serif;
+    display:grid; place-items:center; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .box{display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px}
+  .logo{width:64px;height:64px;opacity:0;transform:translateY(6px) scale(.96);
+    animation:in .5s cubic-bezier(.2,.7,.3,1) forwards}
+  html[data-theme="light"] .logo{content:url("logo-light.png")}
+  .mark{
+    display:flex;align-items:baseline;gap:14px;
+    opacity:0; transform:translateY(6px);
+    animation:in .55s cubic-bezier(.2,.7,.3,1) .1s forwards;
+  }
+  .kuller{font-size:44px;font-weight:700;letter-spacing:.14em}
+  .index{
+    font-size:44px;font-weight:700;letter-spacing:.14em;color:var(--accent);
+    position:relative;
+  }
+  .index::after{
+    content:"";position:absolute;left:0;right:0;bottom:-10px;height:3px;background:var(--accent);
+    transform:scaleX(0);transform-origin:left;
+    animation:line .7s cubic-bezier(.2,.7,.3,1) .45s forwards;
+  }
+  .tag{
+    font-family:'Segoe UI',system-ui,sans-serif;
+    font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);
+    opacity:0;animation:in .5s ease .75s forwards;
+  }
+  .dots{display:flex;gap:6px;margin-top:6px;opacity:0;animation:in .4s ease 1s forwards}
+  .dots i{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;animation:pulse 1.1s infinite}
+  .dots i:nth-child(2){animation-delay:.15s} .dots i:nth-child(3){animation-delay:.3s}
+  @keyframes in{to{opacity:1;transform:none}}
+  @keyframes line{to{transform:scaleX(1)}}
+  @keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+  <div class="box">
+    <img class="logo" src="logo.png" alt="">
+    <div class="mark"><span class="kuller">KULLER</span><span class="index">INDEX</span></div>
+    <div class="tag">картотека документов</div>
+    <div class="dots"><i></i><i></i><i></i></div>
+  </div>
+<script>
+  const theme = new URLSearchParams(location.search).get('theme');
+  if (theme === 'light') document.documentElement.dataset.theme = 'light';
+  window.addEventListener('message', () => {});
+  if (window.require) {} // заставка работает без доступа к API
+</script>
+</body>
+</html>

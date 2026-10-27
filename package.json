@@ -1,0 +1,66 @@
+{
+  "name": "kuller-index",
+  "productName": "KULLER INDEX",
+  "version": "1.0.3",
+  "description": "Поиск, отбор и обработка рабочих документов на Windows",
+  "main": "src/main/main.js",
+  "author": "KULLER",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node tests/run.js",
+    "clean": "node scripts/clean-dist.js",
+    "dist": "node scripts/clean-dist.js && npm version patch --no-git-tag-version && electron-builder --win",
+    "pack": "node scripts/clean-dist.js && electron-builder --win --dir"
+  },
+  "devDependencies": {
+    "electron": "33.2.0",
+    "electron-builder": "25.1.8"
+  },
+  "optionalDependencies": {
+    "mammoth": "1.8.0",
+    "pdf-parse": "1.1.1"
+  },
+  "build": {
+    "appId": "com.kuller.index",
+    "productName": "KULLER INDEX",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "!node_modules/*/{test,tests,example,examples,doc,docs,benchmark,.github}/**",
+      "!node_modules/**/*.{md,markdown,map,ts,flow,yml,yaml}",
+      "!node_modules/**/{.eslintrc,.editorconfig,.npmignore,.nycrc,LICENSE,license}",
+      "!node_modules/pdf-parse/{test,lib/pdf.js/v1.9.426/test}/**"
+    ],
+    "asar": true,
+    "compression": "maximum",
+    "electronLanguages": [
+      "ru",
+      "en-US"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "KULLER INDEX"
+    }
+  }
+}

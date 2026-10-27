@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:">
+<title>KULLER INDEX</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <img class="logo" src="logo.png" alt="" width="26" height="26">
+    <div class="brand"><span>KULLER</span><span class="i">INDEX</span><span class="ver" id="ver"></span></div>
+    <span class="sub">поиск, отбор и действия над документами</span>
+    <div class="right">
+      <button class="ico" id="btnSettings" title="Настройки" aria-label="Настройки">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 3.6v2.1M12 18.3v2.1M20.4 12h-2.1M5.7 12H3.6M18.0 6.0l-1.5 1.5M7.5 16.5L6.0 18.0M18.0 18.0l-1.5-1.5M7.5 7.5L6.0 6.0"/></svg>
+      </button>
+      <div class="seg mini icons" id="theme" role="group" aria-label="Оформление">
+        <button data-t="light" title="Светлая тема" aria-label="Светлая тема">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2L5.5 5.5"/></svg>
+        </button><button data-t="dark" title="Тёмная тема" aria-label="Тёмная тема">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="search">
+    <input type="search" id="q" placeholder="Название, контрагент, номер договора…" autocomplete="off">
+    <label class="deep"><input type="checkbox" id="deep" checked> Искать внутри файлов</label>
+  </div>
+
+  <div class="cols">
+    <aside>
+      <div class="fg"><h3>Промежуток времени</h3>
+        <div class="timeline">
+          <div class="track">
+            <div class="rail"><i id="railFill"></i></div>
+            <div class="ticks" id="ticks"></div>
+            <input type="range" id="r1" min="0" max="100" value="0" aria-label="Начало периода">
+            <input type="range" id="r2" min="0" max="100" value="100" aria-label="Конец периода">
+          </div>
+          <div class="rangelabel"><span id="lbFrom"></span><span id="lbTo"></span></div>
+        </div>
+        <div class="dates" style="margin-top:8px"><input type="date" id="from"><input type="date" id="to"></div>
+      </div>
+
+      <div class="fg"><h3>Расширение</h3><div id="types"></div></div>
+      <div class="fg"><h3>Теги <span class="info" tabindex="0" role="note" title="Несколько тегов — показываем документы, у которых есть все выбранные. Порядок — по частоте использования.">i</span></h3>
+        <div id="tags"></div>
+      </div>
+      <div class="fg"><h3>Контрагент / проект</h3><select id="party"></select></div>
+      <button class="reset" id="reset">Сбросить фильтры</button>
+    </aside>
+
+    <main>
+      <div class="bar">
+        <label class="deep" style="border:0;background:none;padding:0"><input type="checkbox" id="all"> Выбрать всё в списке</label>
+        <span class="found" id="found"></span>
+        <div class="actions">
+          <button class="ico" id="btnUndo" title="Отменить" aria-label="Отменить" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6.5 4.5 11.5l5 5"/><path d="M4.5 11.5h9.2a5.8 5.8 0 0 1 0 11.6H8"/></svg>
+          </button>
+          <button class="ico" id="btnRedo" title="Вернуть" aria-label="Вернуть" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5l5 5-5 5"/><path d="M19.5 11.5h-9.2a5.8 5.8 0 0 0 0 11.6H16"/></svg>
+          </button>
+          <button class="act" id="btnScan">Обновить</button>
+          <button class="act" id="btnAdd">Добавить файлы</button>
+          <button class="act" id="btnAddDir">Добавить папку</button>
+          <button class="act primary" id="btnActions" disabled>Действия</button>
+        </div>
+      </div>
+      <div class="selinfo" id="selinfo" hidden></div>
+      <div class="scroller">
+        <div class="lhead cols-grid" id="lhead" role="group" aria-label="Порядок" hidden>
+          <span></span>
+          <button data-s="name">Имя</button>
+          <button data-s="date">Дата</button>
+          <button data-s="size">Размер</button>
+        </div>
+        <div id="view"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="menu" id="menu" hidden></div>
+<div class="overlay" id="overlay" hidden><div class="card"><h2>Отпустите файлы или папки здесь</h2><p>Файлы попадут в картотеку, и сразу можно будет расставить теги. Папка станет наблюдаемой: приложение просмотрит её целиком. Оригиналы останутся там, где лежат.</p></div></div>
+<div class="drawer" id="drawer" hidden><div class="sheet" id="sheet"></div></div>
+<div class="busy" id="busy" hidden><div class="card"><div class="bar-progress"><i id="busyBar"></i></div><p id="busyText">Работаем…</p><button class="act" id="busyStop" hidden>Остановить</button></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
